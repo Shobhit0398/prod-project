@@ -1,0 +1,56 @@
+pipeline {
+    agent any
+
+    environment {
+        AWS_REGION = "us-east-1"
+        ECR_REPO = "324105940653.dkr.ecr.${AWS_REGION}.amazonaws.com/myapp"
+        IMAGE_TAG = "v${BUILD_NUMBER}"
+        CHART_PATH = "helm/myapp/values.yaml"
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/your/repo.git'
+            }
+        }
+
+        stage ('Build image') {
+            steps {
+                sh "docker build -t myapp:${IMAGE} ./app"
+            }
+        }
+
+        stage('Login to ECR') {
+            steps {
+                sh """
+                aws ecr get-login-password --region ${AWS_REGION} | \
+                docker login --username AWS --password-stdin ${ECR_REPO}
+                """
+            }
+        }
+
+        stage ('Push Image') {
+            steps {
+                sh """
+                docker tag myapp:${IMAGE_TAG} ${ECR_REPO}:${IMAGE_TAG}
+                docker push ${ECR_REPO}:${IMAGE_TAG}
+                """
+            }
+        }
+
+        
+        stage('Update Helm Chart') {
+            steps {
+                sh """
+                  sed -i 's/tag:.*/tag: "${IMAGE_TAG}"/' ${CHART_PATH}
+                  git config user.email "shobhitnagar71@gmail.com"
+                  git config user.name "Shobhit0398"
+                  git commit -am "Update image tag to ${IMAGE_TAG}"
+                  git push
+                """
+            }
+        }
+    }
+}

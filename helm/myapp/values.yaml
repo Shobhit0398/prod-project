@@ -1,0 +1,14 @@
+image:
+  repository: "324105940653.dkr.ecr.ap-south-1.amazonaws.com/myapp"
+  tag: "latest"
+
+blueGreen:
+  active: "blue"    # change to green during deployment
+
+service:
+  port: 80
+  targetPort: 5001
+
+ingress:
+  enabled: true
+  host: "myapp.example.com"

@@ -1,0 +1,6 @@
+controller:
+  image:
+    registry: "docker.io"
+    repository: "jenkins/jenkins"
+    tag: "lts-jdk21"
+    pullPolicy: "IfNotPresent"
