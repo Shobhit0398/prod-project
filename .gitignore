@@ -1,0 +1,6 @@
+# Ignore Terraform state, provider, and crash files
+.terraform
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+crash.log
