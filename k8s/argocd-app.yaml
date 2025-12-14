@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/Shobhit0398/prod-project.git
     path: helm/myapp
-    targetRevision: main
+    targetRevision: HEAD
   destination:
     namespace: production
     server: https://kubernetes.default.svc
