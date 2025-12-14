@@ -72,7 +72,7 @@ pipeline {
 
                     git add $HELM_VALUES_FILE
                     git commit -m "Release: $IMAGE_TAG"
-                    git push https://$GIT_USER:$GIT_TOKEN@github.com/Shobhit0398/prod-project.git $GIT_BRANCH
+                    git push https://$GIT_USER:$GIT_TOKEN@github.com/Shobhit0398/prod-project.git HEAD:$GIT_BRANCH
                     '''
                 }
             }
