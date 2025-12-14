@@ -1,6 +1,6 @@
 image:
   repository: myprodacr3.azurecr.io/myapp
-  tag: "4965446"
+  tag: "5e9f357"
   pullPolicy: IfNotPresent
 
 blueGreen:
