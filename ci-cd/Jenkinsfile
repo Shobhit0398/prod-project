@@ -64,18 +64,31 @@ pipeline {
                     usernameVariable: 'GIT_USER',
                     passwordVariable: 'GIT_TOKEN'
                 )]) {
+            // 1. Commit Stage (No Change needed here)
                     sh '''
                     sed -i "s/tag:.*/tag: \\"${IMAGE_TAG}\\"/" ${HELM_VALUES_FILE}
 
-                    git config user.email "shobhitnagar71@gmail.com"
-                    git config user.name "Shobhit0398"
-            
+                    git config user.email "ci@jenkins.com" // Use a generic CI email
+                    git config user.name "Jenkins CI" // Use a generic CI name
+    
                     git add ${HELM_VALUES_FILE}
                     git commit -m "Release: ${IMAGE_TAG}"
                     '''
+            
+            // 2. Push Stage (Using a dedicated script block for robust variable handling)
                     script {
+                // DEBUG: Print the user variable to confirm it's available in the script context.
+                        echo "DEBUG: GIT_USER is defined as: ${GIT_USER}"
+                
+                // CRITICAL FIX: The entire push command is built as one Groovy string 
+                // and executed in a dedicated SH step.
                         def remoteUrl = "https://${GIT_USER}:${GIT_TOKEN}@github.com/Shobhit0398/prod-project.git"
+                
                         sh """
+                # Print the command Git will execute (with token masked)
+                        echo "Executing push to: ${remoteUrl.replace(GIT_TOKEN, '****')}"
+                
+                # Execute the push command
                         git push ${remoteUrl} HEAD:${GIT_BRANCH}
                         """
                     }
