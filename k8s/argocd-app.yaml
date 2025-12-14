@@ -2,13 +2,13 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: myapp
-  namespace: argocd
+  namespace: myapp
 spec:
   project: default
   source:
     repoURL: https://github.com/Shobhit0398/prod-project.git
     path: helm/myapp
-    targetRevision: HEAD
+    targetRevision: main
   destination:
     namespace: production
     server: https://kubernetes.default.svc
