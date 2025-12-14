@@ -73,11 +73,12 @@ pipeline {
                     git add ${HELM_VALUES_FILE}
                     git commit -m "Release: ${IMAGE_TAG}"
                     '''
-            
-                    def remoteUrl = "https://${GIT_USER}:${GIT_TOKEN}@github.com/Shobhit0398/prod-project.git"
-                    sh """
-                    git push ${remoteUrl} HEAD:${GIT_BRANCH}
-                    """
+                    script {
+                        def remoteUrl = "https://${GIT_USER}:${GIT_TOKEN}@github.com/Shobhit0398/prod-project.git"
+                        sh """
+                        git push ${remoteUrl} HEAD:${GIT_BRANCH}
+                        """
+                    }
                 }
             }
         }
