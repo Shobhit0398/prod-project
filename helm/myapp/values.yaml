@@ -1,6 +1,7 @@
 image:
-  repository: "324105940653.dkr.ecr.ap-south-1.amazonaws.com/myapp"
+  repository: myprodacr3.azurecr.io/myapp
   tag: "8dfca1c"
+  pullPolicy: IfNotPresent
 
 blueGreen:
   active: "blue"    # change to green during deployment
