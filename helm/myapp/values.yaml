@@ -4,7 +4,7 @@ image:
   pullPolicy: IfNotPresent
 
 blueGreen:
-  active: "blue"    # change to green during deployment
+  active: "green"    # change to green during deployment
 
 service:
   port: 80
