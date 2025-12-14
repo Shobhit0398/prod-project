@@ -9,13 +9,6 @@ pipeline {
     }
 
     stages {
-
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/your/repo.git'
-            }
-        }
-
         stage ('Build image') {
             steps {
                 sh "docker build -t myapp:${IMAGE} ./app"
