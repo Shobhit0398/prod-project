@@ -1,6 +1,6 @@
 image:
   repository: "324105940653.dkr.ecr.ap-south-1.amazonaws.com/myapp"
-  tag: "c7021bd"
+  tag: "4743a27"
 
 blueGreen:
   active: "blue"    # change to green during deployment
