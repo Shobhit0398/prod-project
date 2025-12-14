@@ -68,8 +68,8 @@ pipeline {
                     sh '''
                     sed -i "s/tag:.*/tag: \\"${IMAGE_TAG}\\"/" ${HELM_VALUES_FILE}
 
-                    git config user.email "ci@jenkins.com" // Use a generic CI email
-                    git config user.name "Jenkins CI" // Use a generic CI name
+                    git config user.email "shobhitnagar71@gmail.com" // Use a generic CI email
+                    git config user.name "Shobhit0398" // Use a generic CI name
     
                     git add ${HELM_VALUES_FILE}
                     git commit -m "Release: ${IMAGE_TAG}"
