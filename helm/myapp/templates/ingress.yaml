@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   name: myapp
   namespace: production
+  annotations:
+    nginx.ingress.kubernetes.io/canary: "false"
 spec:
   ingressClassName: nginx
   rules:
