@@ -2,9 +2,10 @@ apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: myapp
-  namespace: production
 spec:
   replicas: 4
+  revisionHistoryLimit: 2
+  progressDeadlineSeconds: 600
   selector:
     matchLabels:
       app: myapp
@@ -14,23 +15,26 @@ spec:
         app: myapp
     spec:
       containers:
-      - name: myapp
-        image: myprodacr3.azurecr.io/myapp:e41917a
-        ports:
-        - containerPort: 5001
+        - name: myapp
+          image: myprodacr3.azurecr.io/myapp:{{ .Values.image.tag }}
+          ports:
+            - containerPort: 5001
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5001
+            initialDelaySeconds: 5
+            periodSeconds: 5
 
   strategy:
     canary:
       stableService: myapp-stable
       canaryService: myapp-canary
-      trafficRouting:
-        nginx:
-          stableIngress: myapp
       steps:
-      - setWeight: 10
-      - pause: {duration: 60}
-      - setWeight: 25
-      - pause: {duration: 60}
-      - setWeight: 50
-      - pause: {duration: 60}
-      - setWeight: 100
+        - setWeight: 10
+        - pause: { duration: 30s }
+        - setWeight: 25
+        - pause: { duration: 30s }
+        - setWeight: 50
+        - pause: { duration: 30s }
+        - setWeight: 100
