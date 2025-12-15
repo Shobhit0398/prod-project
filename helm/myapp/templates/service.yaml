@@ -4,7 +4,7 @@ metadata:
   name: myapp
 spec:
   selector:
-    app: "myapp-{{ .Values.blueGreen.active }}"
+    app: myapp
     version: green   # 👈 traffic goes here (switch to blue later)
   ports:
   - port: {{ .Values.service.port }}
