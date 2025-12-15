@@ -5,7 +5,6 @@ metadata:
   namespace: production
 spec:
   replicas: 4
-  revisionHistoryLimit: 2
   selector:
     matchLabels:
       app: myapp
@@ -16,25 +15,22 @@ spec:
     spec:
       containers:
       - name: myapp
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        image: myprodacr3.azurecr.io/myapp:e41917a
         ports:
         - containerPort: 5001
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 5001
-          initialDelaySeconds: 5
-          periodSeconds: 5
 
   strategy:
     canary:
       stableService: myapp-stable
       canaryService: myapp-canary
+      trafficRouting:
+        nginx:
+          stableIngress: myapp
       steps:
       - setWeight: 10
-      - pause: { duration: 60 }
+      - pause: {duration: 60}
       - setWeight: 25
-      - pause: { duration: 60 }
+      - pause: {duration: 60}
       - setWeight: 50
-      - pause: { duration: 60 }
+      - pause: {duration: 60}
       - setWeight: 100
