@@ -1,10 +1,7 @@
 image:
   repository: myprodacr3.azurecr.io/myapp
-  tag: "7e64c9b"
+  tag: "b763160"
   pullPolicy: IfNotPresent
-
-blueGreen:
-  active: "green"    # change to green during deployment
 
 service:
   port: 80
@@ -13,3 +10,14 @@ service:
 ingress:
   enabled: true
   host: "myapp.example.com"
+
+canary:
+  enabled: true
+  steps:
+    - weight: 10
+      pauseSeconds: 60
+    - weight: 25
+      pauseSeconds: 60
+    - weight: 50
+      pauseSeconds: 60
+    - weight: 100
