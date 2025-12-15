@@ -1,6 +1,6 @@
 image:
   repository: myprodacr3.azurecr.io/myapp
-  tag: "05f296e"
+  tag: "5295393"
   pullPolicy: IfNotPresent
 
 service:
